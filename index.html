@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>今晚吃什么 - 情侣版</title>
+    <title>明天早上吃什么</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
@@ -319,8 +319,8 @@
     <div class="container">
         <header>
             <div class="heart">❤</div>
-            <h1>今晚吃什么</h1>
-            <p class="subtitle">和亲爱的一起决定美味晚餐</p>
+            <h1>明天早上吃什么</h1>
+            <p class="subtitle">女王大人决定</p>
         </header>
         
         <div class="content">
@@ -341,10 +341,10 @@
             </div>
             
             <div class="result-section" id="result-area">
-                <p class="result-title">今晚你们决定吃：</p>
+                <p class="result-title">早上决定吃：</p>
                 <div class="final-dish">
                     <span class="final-emoji" id="result-emoji">🍲</span>
-                    <span id="result-dish">红烧排骨</span>
+                    <span id="result-dish">千层饼</span>
                 </div>
                 <div class="romantic-message" id="romantic-message">
                     无论吃什么，最重要的是和你一起分享这美好时光~
@@ -411,14 +411,14 @@
     <script>
         // 菜谱数据
         const dishes = [
-            { id: 1, name: "红烧排骨", emoji: "🍖", message: "香甜可口的红烧排骨，满满的都是爱意~" },
-            { id: 2, name: "番茄炒蛋", emoji: "🍅", message: "简单却温馨的番茄炒蛋，就像我们的日常~" },
-            { id: 3, name: "清蒸鲈鱼", emoji: "🐟", message: "鲜嫩清蒸鲈鱼，愿我们的生活年年有余~" },
-            { id: 4, name: "麻婆豆腐", emoji: "🌶️", message: "麻辣鲜香的麻婆豆腐，让我们的爱情也火热起来~" },
-            { id: 5, name: "蒜蓉西兰花", emoji: "🥦", message: "健康美味的蒜蓉西兰花，关心你的每一餐~" },
-            { id: 6, name: "宫保鸡丁", emoji: "🍗", message: "酸甜可口的宫保鸡丁，让晚餐更有滋味~" },
-            { id: 7, name: "饺子", emoji: "🥟", message: "一起吃饺子，团团圆圆幸福满满~" },
-            { id: 8, name: "火锅", emoji: "🍲", message: "热腾腾的火锅，就像我们炽热的爱情~" }
+            { id: 1, name: "千层饼", emoji: "🍖", message: "红豆口味~" },
+            { id: 2, name: "烧饼", emoji: "🍅", message: "甜口味~" },
+            { id: 3, name: "烧饼", emoji: "🐟", message: "咸口味~" },
+            { id: 4, name: "梅干菜饼", emoji: "🌶️", message: "梅干菜味~" },
+            { id: 5, name: "炒面", emoji: "🥦", message: "微辣~" },
+            { id: 6, name: "肉包", emoji: "🍗", message: "2个~" },
+            { id: 7, name: "青菜包", emoji: "🥟", message: "2个~" },
+            { id: 8, name: "杂粮煎饼", emoji: "🍲", message: "绿地店~" }
         ];
 
         // DOM元素
@@ -493,8 +493,8 @@
         function shareDecision() {
             if (navigator.share) {
                 navigator.share({
-                    title: '今晚吃什么',
-                    text: `我们决定今晚吃: ${resultDish.textContent}！`,
+                    title: '早上吃什么',
+                    text: `女王大人决定: ${resultDish.textContent}！`,
                     url: window.location.href
                 })
                 .catch(error => {
