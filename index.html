@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今晚吃什么 - 情侣版</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #5a3e36;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(to right, #ff758c 0%, #ff7eb3 100%);
+            padding: 25px 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .heart {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: white;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.3); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.3); }
+            60% { transform: scale(1); }
+        }
+        
+        .content {
+            padding: 25px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #ff758c;
+            display: flex;
+            align-items: center;
+        }
+        
+        h2 i {
+            margin-right: 10px;
+        }
+        
+        .dishes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .dish-card {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+        
+        .dish-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-color: #ff7eb3;
+        }
+        
+        .dish-card.selected {
+            border-color: #ff758c;
+            background: #fff5f7;
+        }
+        
+        .dish-emoji {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        
+        .dish-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, #ff758c 0%, #ff7eb3 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 117, 140, 0.5);
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #5a3e36;
+            border: 2px solid #ffccd5;
+        }
+        
+        .btn-secondary:hover {
+            background: #fff5f7;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .result-section {
+            text-align: center;
+            padding: 20px;
+            background: #fff5f7;
+            border-radius: 15px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .result-title {
+            font-size: 18px;
+            color: #ff758c;
+            margin-bottom: 15px;
+        }
+        
+        .final-dish {
+            font-size: 32px;
+            font-weight: bold;
+            color: #ff4d7c;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .final-emoji {
+            margin-right: 10px;
+        }
+        
+        .romantic-message {
+            margin-top: 15px;
+            padding: 12px;
+            background: white;
+            border-radius: 10px;
+            font-style: italic;
+            color: #7c5a4f;
+            border-left: 4px solid #ff7eb3;
+        }
+        
+        .share-section {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .share-btn {
+            padding: 12px 25px;
+            background: #ffccd5;
+            color: #5a3e36;
+            border: none;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .share-btn:hover {
+            background: #ffb3c1;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #7c5a4f;
+            font-size: 14px;
+            border-top: 1px solid #ffccd5;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 500px) {
+            .dishes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+
+        /* GitHub指南部分 */
+        .github-guide {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .github-guide h2 {
+            color: #24292e;
+            border-bottom: 2px solid #ff758c;
+            padding-bottom: 10px;
+        }
+        
+        .guide-step {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f6f8fa;
+            border-radius: 10px;
+            border-left: 4px solid #ff7eb3;
+        }
+        
+        .guide-step h3 {
+            display: flex;
+            align-items: center;
+            color: #24292e;
+        }
+        
+        .guide-step h3 .step-number {
+            background: #ff758c;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+        }
+        
+        .toggle-guide {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 25px;
+            background: #24292e;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="heart">❤</div>
+            <h1>今晚吃什么</h1>
+            <p class="subtitle">和亲爱的一起决定美味晚餐</p>
+        </header>
+        
+        <div class="content">
+            <div class="section">
+                <h2><i class="fas fa-utensils"></i> 选择你想吃的菜</h2>
+                <div class="dishes-grid" id="dishes-container">
+                    <!-- 菜品会通过JS动态生成 -->
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="random-btn">
+                    <i class="fas fa-random"></i> 随机选择一道菜
+                </button>
+                <button class="btn btn-secondary" id="decide-btn">
+                    <i class="fas fa-heart"></i> 一起决定
+                </button>
+            </div>
+            
+            <div class="result-section" id="result-area">
+                <p class="result-title">今晚你们决定吃：</p>
+                <div class="final-dish">
+                    <span class="final-emoji" id="result-emoji">🍲</span>
+                    <span id="result-dish">红烧排骨</span>
+                </div>
+                <div class="romantic-message" id="romantic-message">
+                    无论吃什么，最重要的是和你一起分享这美好时光~
+                </div>
+                
+                <div class="share-section">
+                    <button class="share-btn" id="share-btn">
+                        <i class="fas fa-share-alt"></i> 分享晚餐决定
+                    </button>
+                </div>
+            </div>
+
+            <button class="toggle-guide" id="toggle-guide">
+                <i class="fab fa-github"></i> 如何在GitHub创建仓库并分享此页面
+            </button>
+
+            <div class="github-guide" id="github-guide">
+                <h2><i class="fab fa-github"></i> GitHub仓库创建与部署指南</h2>
+                
+                <div class="guide-step">
+                    <h3><span class="step-number">1</span>登录GitHub</h3>
+                    <p>访问 <a href="https://github.com/" target="_blank">GitHub官网</a>，登录您的账号。</p>
+                </div>
+                
+                <div class="guide-step">
+                    <h3><span class="step-number">2</span>创建新仓库</h3>
+                    <p>点击右上角"+"图标，选择"New repository"。</p>
+                    <p>输入仓库名称（如：dinner-chooser），选择"Public"。</p>
+                    <p>勾选"Initialize this repository with a README"。</p>
+                    <p>点击"Create repository"按钮。</p>
+                </div>
+                
+                <div class="guide-step">
+                    <h3><span class="step-number">3</span>上传HTML文件</h3>
+                    <p>在仓库页面，点击"Add file" → "Upload files"。</p>
+                    <p>将本页保存为HTML文件（右键 → 另存为），然后上传到仓库。</p>
+                    <p>文件必须命名为<strong>index.html</strong>才能作为默认页面。</p>
+                </div>
+                
+                <div class="guide-step">
+                    <h3><span class="step-number">4</span>启用GitHub Pages</h3>
+                    <p>进入仓库的"Settings" → "Pages"。</p>
+                    <p>在"Source"部分，选择"main"分支，点击"Save"。</p>
+                    <p>等待几分钟后，您的页面将在<code>https://[您的用户名].github.io/[仓库名]</code>上线。</p>
+                </div>
+                
+                <div class="guide-step">
+                    <h3><span class="step-number">5</span>分享给女朋友</h3>
+                    <p>复制生成的URL链接，通过微信、QQ或邮件分享给您女朋友。</p>
+                    <p>她可以在任何设备上访问这个链接，无需下载任何应用。</p>
+                </div>
+
+                <div class="success-message" id="success-message">
+                    <i class="fas fa-check-circle"></i> 恭喜！您已成功创建GitHub仓库并部署页面！
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>为你和亲爱的特别设计 ❤ | 使用GitHub Pages分享给TA</p>
+        </footer>
+    </div>
+
+    <script>
+        // 菜谱数据
+        const dishes = [
+            { id: 1, name: "红烧排骨", emoji: "🍖", message: "香甜可口的红烧排骨，满满的都是爱意~" },
+            { id: 2, name: "番茄炒蛋", emoji: "🍅", message: "简单却温馨的番茄炒蛋，就像我们的日常~" },
+            { id: 3, name: "清蒸鲈鱼", emoji: "🐟", message: "鲜嫩清蒸鲈鱼，愿我们的生活年年有余~" },
+            { id: 4, name: "麻婆豆腐", emoji: "🌶️", message: "麻辣鲜香的麻婆豆腐，让我们的爱情也火热起来~" },
+            { id: 5, name: "蒜蓉西兰花", emoji: "🥦", message: "健康美味的蒜蓉西兰花，关心你的每一餐~" },
+            { id: 6, name: "宫保鸡丁", emoji: "🍗", message: "酸甜可口的宫保鸡丁，让晚餐更有滋味~" },
+            { id: 7, name: "饺子", emoji: "🥟", message: "一起吃饺子，团团圆圆幸福满满~" },
+            { id: 8, name: "火锅", emoji: "🍲", message: "热腾腾的火锅，就像我们炽热的爱情~" }
+        ];
+
+        // DOM元素
+        const dishesContainer = document.getElementById('dishes-container');
+        const randomBtn = document.getElementById('random-btn');
+        const decideBtn = document.getElementById('decide-btn');
+        const resultArea = document.getElementById('result-area');
+        const resultDish = document.getElementById('result-dish');
+        const resultEmoji = document.getElementById('result-emoji');
+        const romanticMessage = document.getElementById('romantic-message');
+        const shareBtn = document.getElementById('share-btn');
+        const toggleGuide = document.getElementById('toggle-guide');
+        const githubGuide = document.getElementById('github-guide');
+        const successMessage = document.getElementById('success-message');
+
+        // 初始化菜品选择
+        function initializeDishes() {
+            dishesContainer.innerHTML = '';
+            dishes.forEach(dish => {
+                const dishCard = document.createElement('div');
+                dishCard.className = 'dish-card';
+                dishCard.dataset.id = dish.id;
+                dishCard.innerHTML = `
+                    <div class="dish-emoji">${dish.emoji}</div>
+                    <div class="dish-name">${dish.name}</div>
+                `;
+                dishCard.addEventListener('click', () => {
+                    document.querySelectorAll('.dish-card').forEach(card => {
+                        card.classList.remove('selected');
+                    });
+                    dishCard.classList.add('selected');
+                    
+                    // 显示选择结果
+                    const selectedDish = dishes.find(d => d.id == dish.id);
+                    resultDish.textContent = selectedDish.name;
+                    resultEmoji.textContent = selectedDish.emoji;
+                    romanticMessage.textContent = selectedDish.message;
+                    resultArea.style.display = 'block';
+                });
+                dishesContainer.appendChild(dishCard);
+            });
+        }
+
+        // 随机选择菜品
+        function selectRandomDish() {
+            const randomIndex = Math.floor(Math.random() * dishes.length);
+            const selectedDish = dishes[randomIndex];
+            
+            resultDish.textContent = selectedDish.name;
+            resultEmoji.textContent = selectedDish.emoji;
+            romanticMessage.textContent = selectedDish.message;
+            resultArea.style.display = 'block';
+            
+            // 滚动到结果区域
+            resultArea.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 一起决定（模拟双方选择）
+        function decideTogether() {
+            // 模拟"思考"过程
+            decideBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 思考中...';
+            decideBtn.disabled = true;
+            
+            setTimeout(() => {
+                selectRandomDish();
+                decideBtn.innerHTML = '<i class="fas fa-heart"></i> 一起决定';
+                decideBtn.disabled = false;
+            }, 1500);
+        }
+
+        // 分享功能
+        function shareDecision() {
+            if (navigator.share) {
+                navigator.share({
+                    title: '今晚吃什么',
+                    text: `我们决定今晚吃: ${resultDish.textContent}！`,
+                    url: window.location.href
+                })
+                .catch(error => {
+                    alert('分享失败，但你可以手动复制链接分享给TA~');
+                });
+            } else {
+                alert(`复制链接分享给TA: ${window.location.href}\n\n我们决定今晚吃: ${resultDish.textContent}！`);
+            }
+        }
+
+        // 切换指南显示
+        toggleGuide.addEventListener('click', () => {
+            if (githubGuide.style.display === 'block') {
+                githubGuide.style.display = 'none';
+                toggleGuide.innerHTML = '<i class="fab fa-github"></i> 如何在GitHub创建仓库并分享此页面';
+            } else {
+                githubGuide.style.display = 'block';
+                toggleGuide.innerHTML = '<i class="fas fa-times"></i> 关闭指南';
+            }
+        });
+
+        // 模拟成功消息
+        function showSuccessMessage() {
+            successMessage.style.display = 'block';
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        // 事件监听
+        randomBtn.addEventListener('click', selectRandomDish);
+        decideBtn.addEventListener('click', decideTogether);
+        shareBtn.addEventListener('click', shareDecision);
+
+        // 初始化
+        initializeDishes();
+        
+        // 显示成功消息（仅用于演示）
+        setTimeout(showSuccessMessage, 3000);
+    </script>
+</body>
+</html>
